@@ -1,6 +1,6 @@
 ##########################################################################################################
 
-# runAnalysis.r File Description:
+# run_analysis.R File Description:
 
 # This script will perform the following steps on the UCI HAR Dataset downloaded from 
 # https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
@@ -28,13 +28,13 @@ subjectTrain = read.table('./train/subject_train.txt',header=FALSE); #imports su
 xTrain       = read.table('./train/x_train.txt',header=FALSE); #imports x_train.txt
 yTrain       = read.table('./train/y_train.txt',header=FALSE); #imports y_train.txt
 
-# Assigin column names to the data imported above
+# Assign column names to the data imported above
 colnames(activityType)  = c('activityId','activityType');
 colnames(subjectTrain)  = "subjectId";
 colnames(xTrain)        = features[,2]; 
 colnames(yTrain)        = "activityId";
 
-# cCreate the final training set by merging yTrain, subjectTrain, and xTrain
+# Create the final training set by merging yTrain, subjectTrain, and xTrain
 trainingData = cbind(yTrain,subjectTrain,xTrain);
 
 # Read in the test data
@@ -47,10 +47,8 @@ colnames(subjectTest) = "subjectId";
 colnames(xTest)       = features[,2]; 
 colnames(yTest)       = "activityId";
 
-
 # Create the final test set by merging the xTest, yTest and subjectTest data
 testData = cbind(yTest,subjectTest,xTest);
-
 
 # Combine training and test data to create a final data set
 finalData = rbind(trainingData,testData);
@@ -109,4 +107,4 @@ tidyData    = aggregate(finalDataNoActivityType[,names(finalDataNoActivityType) 
 tidyData    = merge(tidyData,activityType,by='activityId',all.x=TRUE);
 
 # Export the tidyData set 
-write.table(tidyData, './tidyData.txt',row.names=TRUE,sep='\t');
+write.table(tidyData, './tidyData.txt',row.names=FALSE,sep='\t');
